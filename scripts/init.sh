@@ -19,7 +19,7 @@ if [ ! -d "${LOCAL_PATH}/.git" ]; then
 	exit 0;
 fi
 
-pushd ${LOCAL_PATH}
+pushd ${LOCAL_PATH} > /dev/null
 LOCAL_REVISION=$(git rev-parse @)
 REMOTE_REVISION=$(git rev-parse "origin/${GITHUB_BRANCH}")
 
@@ -28,4 +28,4 @@ if [ ! $LOCAL_REVISION = $REMOTE_REVISION ]; then
 	wintersmith build
 fi
 
-popd
+popd > /dev/null
