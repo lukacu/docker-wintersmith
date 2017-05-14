@@ -25,14 +25,16 @@ if [ ! -d "${LOCAL_PATH}/.git" ]; then
 fi
 
 pushd ${LOCAL_PATH} > /dev/null
-git pull origin "${GITHUB_BRANCH}"
+git fetch origin
 LOCAL_REVISION=$(git rev-parse @)
 REMOTE_REVISION=$(git rev-parse "origin/${GITHUB_BRANCH}")
 
 echo "Local revision: $LOCAL_REVISION"
 echo "Renite revision: $REMOTE_REVISION"
 if [ ! $LOCAL_REVISION = $REMOTE_REVISION ]; then
+        git merge "origin/${GITHUB_BRANCH}"
         wintersmith build
 fi
 
 popd > /dev/null
+
